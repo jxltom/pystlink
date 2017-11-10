@@ -152,7 +152,7 @@ class Flash():
         self.end_of_operation(self._stlink.get_debugreg32(Flash.FLASH_SR_REG))
 
     def end_of_operation(self, status):
-        if status != Flash.FLASH_SR_EOP_BIT:
+        if status not in (Flash.FLASH_SR_EOP_BIT, Flash.FLASH_CR_MER_BIT):  # modified
             raise lib.stlinkex.StlinkException('Error writing FLASH with status (FLASH_SR) %08x' % status)
         self._stlink.set_debugreg32(Flash.FLASH_SR_REG, status)
 
