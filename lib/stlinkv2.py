@@ -1,3 +1,5 @@
+import time
+
 import lib.stlinkex
 
 
@@ -193,6 +195,8 @@ class Stlink():
         return self._connector.xfer(cmd, rx_len=2)
 
     def get_debugreg32(self, addr):
+        time.sleep(0.002)  # minimal
+
         if addr % 4:
             raise lib.stlinkex.StlinkException('get_mem_short address is not in multiples of 4')
         cmd = [Stlink.STLINK_DEBUG_COMMAND, Stlink.STLINK_DEBUG_APIV2_READDEBUGREG]
@@ -201,6 +205,8 @@ class Stlink():
         return int.from_bytes(rx[4:8], byteorder='little')
 
     def get_debugreg16(self, addr):
+        time.sleep(0.02)  # minimal
+
         if addr % 2:
             raise lib.stlinkex.StlinkException('get_mem_short address is not in even')
         val = self.get_debugreg32(addr & 0xfffffffc)
