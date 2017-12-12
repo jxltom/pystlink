@@ -452,7 +452,7 @@ class PyStlink():
                 runtime_status = 1
             self._dbg.verbose('DONE in %0.2fs' % (time.time() - self._start_time))
         if runtime_status:
-            raise Exception(runtime_status)
+            raise Exception('pystlink raises an exception with runtime status {}'.format(runtime_status))
 
 
 if __name__ == "__main__":
